@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grade Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Grade Calculator</h1>
+
+        <!-- Form for entering marks -->
+        <div>
+            <label for="sub1">Subject 1:</label>
+            <input type="number" id="sub1" placeholder="Enter marks" min="0" max="100">
+        </div>
+        <div>
+            <label for="sub2">Subject 2:</label>
+            <input type="number" id="sub2" placeholder="Enter marks" min="0" max="100">
+        </div>
+        <div>
+            <label for="sub3">Subject 3:</label>
+            <input type="number" id="sub3" placeholder="Enter marks" min="0" max="100">
+        </div>
+        <div>
+            <label for="sub4">Subject 4:</label>
+            <input type="number" id="sub4" placeholder="Enter marks" min="0" max="100">
+        </div>
+        
+        <!-- Button to calculate grade -->
+        <button onclick="calculateGrade()">Calculate Grade</button>
+        
+        <!-- Display the result -->
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateGrade() {
+            // Get the marks from the input fields
+            var sub1 = parseInt(document.getElementById("sub1").value);
+            var sub2 = parseInt(document.getElementById("sub2").value);
+            var sub3 = parseInt(document.getElementById("sub3").value);
+            var sub4 = parseInt(document.getElementById("sub4").value);
+
+            // Validate if any subject marks are empty or invalid
+            if (isNaN(sub1) || isNaN(sub2) || isNaN(sub3) || isNaN(sub4)) {
+                document.getElementById("result").innerHTML = "Please enter valid marks for all subjects.";
+                return;
+            }
+
+            // Calculate the average marks
+            var average = (sub1 + sub2 + sub3 + sub4) / 4;
+
+            // Determine the grade based on the average
+            var grade = "";
+            if (average > 90) {
+                grade = "A";
+            } else if (average > 80) {
+                grade = "B";
+            } else if (average > 70) {
+                grade = "C";
+            } else if (average > 60) {
+                grade = "D";
+            } else {
+                grade = "F";
+            }
+
+            // Display the grade and average
+            document.getElementById("result").innerHTML = `Average: ${average.toFixed(2)} <br> Grade: ${grade}`;
+        }
+    </script>
+
+</body>
+</html>

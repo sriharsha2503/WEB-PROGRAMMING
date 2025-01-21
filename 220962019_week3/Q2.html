@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Greeting and Clock</title>
+    <style>
+        body {
+            background-color: #f2f4f7;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #4CAF50;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .clock {
+            font-size: 2.5rem;
+            margin-top: 30px;
+            color: #333;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .time-of-day {
+            color: #FF6347;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome to the Dynamic Greeting</h1>
+        <div class="greeting" id="greeting">Loading greeting...</div>
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="time-of-day" id="time-of-day"> </div>
+    </div>
+
+    <script>
+        // Function to update the clock and greeting
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // Format time to always show two digits for hours, minutes, and seconds
+            const formattedTime = `${formatTime(hours)}:${formatTime(minutes)}:${formatTime(seconds)}`;
+
+            // Update the clock on the webpage
+            document.getElementById('clock').innerText = formattedTime;
+
+            // Greet the user based on the time of day
+            let greetingMessage = "";
+            let timeOfDayMessage = "";
+
+            if (hours >= 5 && hours < 12) {
+                greetingMessage = "Good Morning!";
+                timeOfDayMessage = "It's a fresh start to the day!";
+                // Alert the user with morning greeting
+                if (hours === 5 && minutes === 0 && seconds === 0) {
+                    alert(greetingMessage);
+                }
+            } else if (hours >= 12 && hours < 17) {
+                greetingMessage = "Good Afternoon!";
+                timeOfDayMessage = "Hope you're having a productive day!";
+                // Alert the user with afternoon greeting
+                if (hours === 12 && minutes === 0 && seconds === 0) {
+                    alert(greetingMessage);
+                }
+            } else if (hours >= 17 && hours < 21) {
+                greetingMessage = "Good Evening!";
+                timeOfDayMessage = "Relax and enjoy the evening!";
+                // Alert the user with evening greeting
+                if (hours === 17 && minutes === 0 && seconds === 0) {
+                    alert(greetingMessage);
+                }
+            } else {
+                greetingMessage = "Good Night!";
+                timeOfDayMessage = "Sleep well and recharge for tomorrow!";
+                // Alert the user with night greeting
+                if (hours === 0 && minutes === 0 && seconds === 0) {
+                    alert(greetingMessage);
+                }
+            }
+
+            // Update the greeting and time-of-day message on the webpage
+            document.getElementById('greeting').innerText = greetingMessage;
+            document.getElementById('time-of-day').innerText = timeOfDayMessage;
+        }
+
+        // Helper function to format the time (always show two digits)
+        function formatTime(time) {
+            return time < 10 ? `0${time}` : time;
+        }
+
+        // Update the clock every second
+        setInterval(updateTime, 1000);
+    </script>
+
+</body>
+</html>
+

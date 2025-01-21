@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4682b4;
+        }
+
+        .question {
+            margin: 20px 0;
+        }
+
+        .options {
+            margin: 10px 0;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #5f9ea0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Online Quiz</h1>
+
+    <div id="quiz-container">
+        <!-- Question 1 -->
+        <div class="question" id="q1">
+            <p>1. What is the capital of France?</p>
+            <div class="options">
+                <input type="radio" name="q1" value="A"> A. Berlin<br>
+                <input type="radio" name="q1" value="B"> B. Madrid<br>
+                <input type="radio" name="q1" value="C"> C. Paris<br>
+                <input type="radio" name="q1" value="D"> D. Rome
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question" id="q2">
+            <p>2. Who wrote "Romeo and Juliet"?</p>
+            <div class="options">
+                <input type="radio" name="q2" value="A"> A. Charles Dickens<br>
+                <input type="radio" name="q2" value="B"> B. William Shakespeare<br>
+                <input type="radio" name="q2" value="C"> C. Jane Austen<br>
+                <input type="radio" name="q2" value="D"> D. Mark Twain
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question" id="q3">
+            <p>3. What is the square root of 64?</p>
+            <div class="options">
+                <input type="radio" name="q3" value="A"> A. 6<br>
+                <input type="radio" name="q3" value="B"> B. 7<br>
+                <input type="radio" name="q3" value="C"> C. 8<br>
+                <input type="radio" name="q3" value="D"> D. 9
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button class="button" onclick="checkAnswers()">Submit Quiz</button>
+
+        <!-- Result -->
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            let score = 0;
+
+            // Check Question 1
+            if (document.querySelector('input[name="q1"]:checked') && document.querySelector('input[name="q1"]:checked').value === "C") {
+                score++;
+            }
+
+            // Check Question 2
+            if (document.querySelector('input[name="q2"]:checked') && document.querySelector('input[name="q2"]:checked').value === "B") {
+                score++;
+            }
+
+            // Check Question 3
+            if (document.querySelector('input[name="q3"]:checked') && document.querySelector('input[name="q3"]:checked').value === "C") {
+                score++;
+            }
+
+            // Display result
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = `You scored ${score} out of 3!`;
+
+            // Optional: Provide feedback based on score
+            if (score === 3) {
+                resultDiv.innerHTML += "<br>Excellent!";
+            } else if (score === 2) {
+                resultDiv.innerHTML += "<br>Good Job!";
+            } else {
+                resultDiv.innerHTML += "<br>Better luck next time!";
+            }
+        }
+    </script>
+
+</body>
+</html>
