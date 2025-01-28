@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Bill</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    select, input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .checkbox-group {
+      display: flex;
+      justify-content: space-between;
+    }
+    .checkbox-group label {
+      margin-right: 15px;
+      margin-left: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Order Form</h2>
+
+    <label for="brand">Choose Brand:</label>
+    <select id="brand">
+      <option value="HP">HP</option>
+      <option value="Nokia">Nokia</option>
+      <option value="Samsung">Samsung</option>
+      <option value="Motorola">Motorola</option>
+      <option value="Apple">Apple</option>
+    </select>
+
+    <label>Choose Product Type:</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="mobile"> Mobile</label>
+      <label><input type="checkbox" id="laptop"> Laptop</label>
+    </div>
+
+    <label for="quantity">Enter Quantity:</label>
+    <input type="number" id="quantity" min="1" value="1">
+
+    
+    <button onclick="produceBill()">Produce Bill</button>
+  </div>
+
+  <script>
+    function produceBill() {
+      
+      var brand = document.getElementById('brand').value;
+      
+     
+      var mobileSelected = document.getElementById('mobile').checked;
+      var laptopSelected = document.getElementById('laptop').checked;
+      
+      
+      var quantity = document.getElementById('quantity').value;
+      
+
+      var prices = {
+        "Mobile": 500,
+        "Laptop": 1000 
+      };
+      
+
+      var totalAmount = 0;
+      if (mobileSelected) {
+        totalAmount += prices["Mobile"] * quantity;
+      }
+      if (laptopSelected) {
+        totalAmount += prices["Laptop"] * quantity;
+      }
+ 
+      if (totalAmount > 0) {
+        alert("Total Amount for " + quantity + " item(s) of selected products is: $" + totalAmount);
+      } else {
+        alert("Please select a product type to generate the bill.");
+      }
+    }
+  </script>
+
+</body>
+</html>
+

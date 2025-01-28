@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move Table and Image</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    table {
+      width: 300px;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    td, th {
+      border: 1px solid #000;
+      padding: 10px;
+      text-align: center;
+    }
+    /* Apply alternating row colors */
+    .alternate-color tr:nth-child(odd) {
+      background-color: #f2f2f2; /* Light gray for odd rows */
+    }
+    .alternate-color tr:nth-child(even) {
+      background-color: #d9f7be; /* Light green for even rows */
+    }
+    #tableAndImage {
+      position: relative;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      margin-left: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="moveButton">Move Table and Image</button>
+
+  <div id="tableAndImage">
+    <table class="alternate-color">
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+      </tr>
+      <tr>
+        <td>Row 1, Cell 1</td>
+        <td>Row 1, Cell 2</td>
+        <td>Row 1, Cell 3</td>
+      </tr>
+      <tr>
+        <td>Row 2, Cell 1</td>
+        <td>Row 2, Cell 2</td>
+        <td>Row 2, Cell 3</td>
+      </tr>
+      <tr>
+        <td>Row 3, Cell 1</td>
+        <td>Row 3, Cell 2</td>
+        <td>Row 3, Cell 3</td>
+      </tr>
+    </table>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpp23FWRxwEJ42yvOFgv0Xp4H-nNA903X3WA&s" alt="Sample Image">
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#moveButton').click(function() {
+        $('#tableAndImage').animate({ left: '0px' }, 1000); // 1000ms = 1 second
+      });
+
+      // Initially position the table and image off-screen to the right
+      $('#tableAndImage').css('left', '500px');
+    });
+  </script>
+
+</body>
+</html>
+
