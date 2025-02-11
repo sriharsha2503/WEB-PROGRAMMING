@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details Form</title>
+    <script type="text/javascript">
+        function calculatePercentage() {
+            // Get the marks entered by the teacher
+            var english = parseFloat(document.getElementById("english").value);
+            var physics = parseFloat(document.getElementById("physics").value);
+            var chemistry = parseFloat(document.getElementById("chemistry").value);
+
+            // Calculate the total and percentage
+            var totalMarks = english + physics + chemistry;
+            var percentage = (totalMarks / 300) * 100;
+
+            // Display the total and percentage in the result section
+            document.getElementById("result").value = "Name: " + document.getElementById("name").value + "\n" +
+                "Date of Birth: " + document.getElementById("dob").value + "\n" +
+                "Address: " + document.getElementById("address").value + "\n" +
+                "Contact Number: " + document.getElementById("contact").value + "\n" +
+                "Email: " + document.getElementById("email").value + "\n" +
+                "Marks (English): " + english + "\n" +
+                "Marks (Physics): " + physics + "\n" +
+                "Marks (Chemistry): " + chemistry + "\n" +
+                "Total Marks: " + totalMarks + "\n" +
+                "Percentage: " + percentage.toFixed(2) + "%";
+        }
+    </script>
+</head>
+<body>
+    <h1>Enter Student Details</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="dob">Date of Birth:</label><br>
+        <input type="date" id="dob" name="dob" required><br><br>
+
+        <label for="address">Address:</label><br>
+        <input type="text" id="address" name="address" required><br><br>
+
+        <label for="contact">Contact Number:</label><br>
+        <input type="text" id="contact" name="contact" required><br><br>
+
+        <label for="email">Email ID:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="english">Marks in English:</label><br>
+        <input type="number" id="english" name="english" min="0" max="100" required><br><br>
+
+        <label for="physics">Marks in Physics:</label><br>
+        <input type="number" id="physics" name="physics" min="0" max="100" required><br><br>
+
+        <label for="chemistry">Marks in Chemistry:</label><br>
+        <input type="number" id="chemistry" name="chemistry" min="0" max="100" required><br><br>
+
+        <button type="button" onclick="calculatePercentage()">Submit</button><br><br>
+
+        <label for="result">Student Details and Result:</label><br>
+        <textarea id="result" rows="10" cols="50" readonly></textarea><br>
+    </form>
+</body>
+</html>
+

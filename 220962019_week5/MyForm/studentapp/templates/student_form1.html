@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Promotion Eligibility</title>
+    <script>
+        function checkEligibility() {
+            // Get the selected employee ID and date of joining
+            var employeeId = document.getElementById("employeeId").value;
+            var dateOfJoining = document.getElementById("dateOfJoining").value;
+
+            // Ensure both fields are filled
+            if (!employeeId || !dateOfJoining) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Convert the date of joining to a Date object
+            var joiningDate = new Date(dateOfJoining);
+            var currentDate = new Date();
+
+            // Calculate the difference in years
+            var experience = currentDate.getFullYear() - joiningDate.getFullYear();
+            var monthDifference = currentDate.getMonth() - joiningDate.getMonth();
+
+            // Adjust if the employee hasn't reached their anniversary yet this year
+            if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < joiningDate.getDate())) {
+                experience--;
+            }
+
+            // Display the eligibility message based on the experience
+            if (experience >= 5) {
+                document.getElementById("eligibilityMessage").innerText = "YES";
+            } else {
+                document.getElementById("eligibilityMessage").innerText = "NO";
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Employee Promotion Eligibility</h2>
+    <form action="javascript:void(0);">
+        <!-- Employee ID Dropdown -->
+        <label for="employeeId">Employee ID:</label>
+        <select id="employeeId" name="employeeId">
+            <option value="">Select Employee</option>
+            <option value="101">101</option>
+            <option value="102">102</option>
+            <option value="103">103</option>
+            <option value="104">104</option>
+            <!-- Add more employee IDs as needed -->
+        </select><br><br>
+
+        <!-- Date of Joining Textbox -->
+        <label for="dateOfJoining">Date of Joining:</label>
+        <input type="date" id="dateOfJoining" name="dateOfJoining"><br><br>
+
+        <!-- Button to Check Eligibility -->
+        <button type="button" onclick="checkEligibility()">Am I Eligible for Promotion</button><br><br>
+
+        <!-- Eligibility Result -->
+        <label id="eligibilityMessage"></label>
+    </form>
+
+</body>
+</html>
