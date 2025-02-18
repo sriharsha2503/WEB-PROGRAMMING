@@ -1,0 +1,39 @@
+<!-- calcapp/templates/calculate.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Calculator</title>
+</head>
+<body>
+    <h1>Basic Arithmetic Operations</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="num1">First Number:</label>
+        <input type="number" name="num1" required>
+        <br>
+
+        <label for="num2">Second Number:</label>
+        <input type="number" name="num2" required>
+        <br>
+
+        <label for="operation">Operation:</label>
+        <select name="operation" required>
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+            <option value="multiply">Multiply</option>
+            <option value="divide">Divide</option>
+        </select>
+        <br>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    {% if result %}
+        <h2>Result: {{ result }}</h2>
+    {% elif error %}
+        <h2 style="color: red;">Error: {{ error }}</h2>
+    {% endif %}
+</body>
+</html>
+

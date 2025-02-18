@@ -1,0 +1,54 @@
+<!-- magcover/templates/magcover/generate_cover.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magazine Cover Generator</title>
+    <link rel="stylesheet" href="{% static 'magcover/styles.css' %}">
+</head>
+<body>
+
+    <h1>Create Your Magazine Cover</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label for="cover_image">Upload Cover Image:</label>
+        <input type="file" name="cover_image" accept="image/*">
+        <br><br>
+
+        <label for="title">Title:</label>
+        <input type="text" name="title" placeholder="Enter magazine title" required>
+        <br><br>
+
+        <label for="subtitle">Subtitle:</label>
+        <input type="text" name="subtitle" placeholder="Enter subtitle" required>
+        <br><br>
+
+        <label for="background_color">Background Color:</label>
+        <input type="color" name="background_color" value="#FFFFFF">
+        <br><br>
+
+        <label for="font_size">Font Size (px):</label>
+        <input type="number" name="font_size" value="20">
+        <br><br>
+
+        <label for="font_color">Font Color:</label>
+        <input type="color" name="font_color" value="#000000">
+        <br><br>
+
+        <button type="submit">Generate Cover</button>
+    </form>
+
+    {% if cover_image %}
+    <div class="cover-preview" style="background-color: {{ background_color }}; font-size: {{ font_size }}px; color: {{ font_color }};">
+        <img src="{{ cover_image.url }}" alt="Cover Image" style="max-width: 100%; height: auto;">
+        <h2>{{ title }}</h2>
+        <p>{{ subtitle }}</p>
+    </div>
+    {% endif %}
+
+</body>
+</html>
+
