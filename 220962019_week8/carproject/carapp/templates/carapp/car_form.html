@@ -1,0 +1,19 @@
+<!-- carapp/templates/carapp/car_form.html -->
+<html>
+<body>
+    <h2>Car Model Form</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div>
+            <label for="id_manufacturer">Car Manufacturer:</label>
+            {{ form.manufacturer }}
+        </div>
+        <div>
+            <label for="id_model_name">Model Name:</label>
+            {{ form.model_name }}
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+

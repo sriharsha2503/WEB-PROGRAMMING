@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Second Page</title>
+</head>
+<body>
+    <h1>Your Details</h1>
+    <p>Name: {{ name }}</p>
+    <p>Roll Number: {{ roll }}</p>
+    <p>Subject: {{ subject }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Go Back to First Page</button>
+    </form>
+</body>
+</html>
+
