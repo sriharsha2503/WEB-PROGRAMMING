@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Human Details</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Human Details</h1>
+    
+    <!-- Dropdown with options from the database -->
+    <label for="humanSelect">Select First Name:</label>
+    <select id="humanSelect">
+        <option value="">--Select--</option>
+        {% for human in humans %}
+            <option value="{{ human.id }}">{{ human.first_name }}</option>
+        {% endfor %}
+    </select>
+    
+    <br><br>
+    
+    <!-- Textboxes for details -->
+    <label>First Name:</label>
+    <input type="text" id="first_name"><br>
+    
+    <label>Last Name:</label>
+    <input type="text" id="last_name"><br>
+    
+    <label>Phone:</label>
+    <input type="text" id="phone"><br>
+    
+    <label>Address:</label>
+    <input type="text" id="address"><br>
+    
+    <label>City:</label>
+    <input type="text" id="city"><br>
+    
+    <br>
+    
+    <!-- Initially disabled buttons -->
+    <button id="updateBtn" disabled>Update</button>
+    <button id="deleteBtn" disabled>Delete</button>
+    
+    <script>
+        $(document).ready(function(){
+            // Disable buttons on initial page load
+            $('#updateBtn, #deleteBtn').prop('disabled', true);
+            
+            // When a record is selected
+            $('#humanSelect').change(function(){
+                var id = $(this).val();
+                if(id) {
+                    // Enable buttons when a valid record is chosen
+                    $('#updateBtn, #deleteBtn').prop('disabled', false);
+                    
+                    // Fetch and display record details via AJAX
+                    $.ajax({
+                        url: "{% url 'get_human' %}",
+                        data: { id: id },
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#first_name').val(data.first_name);
+                            $('#last_name').val(data.last_name);
+                            $('#phone').val(data.phone);
+                            $('#address').val(data.address);
+                            $('#city').val(data.city);
+                        }
+                    });
+                } else {
+                    // Clear fields and disable buttons if no record is selected
+                    $('#first_name, #last_name, #phone, #address, #city').val('');
+                    $('#updateBtn, #deleteBtn').prop('disabled', true);
+                }
+            });
+            
+            // Update button handler
+            $('#updateBtn').click(function(){
+                var id = $('#humanSelect').val();
+                if(id) {
+                    $.ajax({
+                        url: "{% url 'update_human' %}",
+                        type: 'POST',
+                        data: {
+                            id: id,
+                            first_name: $('#first_name').val(),
+                            last_name: $('#last_name').val(),
+                            phone: $('#phone').val(),
+                            address: $('#address').val(),
+                            city: $('#city').val(),
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            alert('Record updated successfully.');
+                            location.reload();
+                        }
+                    });
+                } else {
+                    alert('Please select a record to update.');
+                }
+            });
+            
+            // Delete button handler
+            $('#deleteBtn').click(function(){
+                var id = $('#humanSelect').val();
+                if(id) {
+                    if(confirm('Are you sure you want to delete this record?')) {
+                        $.ajax({
+                            url: "{% url 'delete_human' %}",
+                            type: 'POST',
+                            data: {
+                                id: id,
+                                csrfmiddlewaretoken: '{{ csrf_token }}'
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                alert('Record deleted successfully.');
+                                location.reload();
+                            }
+                        });
+                    }
+                } else {
+                    alert('Please select a record to delete.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
