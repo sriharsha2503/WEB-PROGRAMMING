@@ -1,13 +1,9 @@
 ✅ Q1: Transfer Multiple Parameters Between Web Pages
 🎯 Requirement:
 Page with:
-
 Dropdown for car manufacturer.
-
 Text box for model name.
-
 Submit button.
-
 On submit → new page shows selected manufacturer and model.
 
 📁 Project Structure
@@ -23,12 +19,9 @@ carproject/
 │   ├── views.py
 ├── carproject/
 │   ├── urls.py
-🧾 carapp/forms.py
-python
-Copy
-Edit
-from django import forms
 
+🧾 carapp/forms.py
+from django import forms
 class CarForm(forms.Form):
     MANUFACTURERS = [
         ('Toyota', 'Toyota'),
@@ -38,13 +31,10 @@ class CarForm(forms.Form):
     ]
     manufacturer = forms.ChoiceField(choices=MANUFACTURERS)
     model = forms.CharField(max_length=100)
+
 ⚙️ carapp/views.py
-python
-Copy
-Edit
 from django.shortcuts import render
 from .forms import CarForm
-
 def car_view(request):
     if request.method == 'POST':
         form = CarForm(request.POST)
@@ -56,22 +46,17 @@ def car_view(request):
     else:
         form = CarForm()
     return render(request, 'carapp/carform.html', {'form': form})
+
 🌐 carproject/urls.py
-python
-Copy
-Edit
 from django.contrib import admin
 from django.urls import path
 from carapp import views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.car_view, name='carform'),
 ]
+
 🖼️ carform.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -83,10 +68,8 @@ Edit
 </form>
 </body>
 </html>
+
 🖼️ cardetails.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -95,26 +78,19 @@ Edit
 <p>Model: <strong>{{ model }}</strong></p>
 </body>
 </html>
+
+=============================================================================================================================================================================
 ✅ Q2: Transfer Parameters Using Sessions
 🎯 Requirement:
 Page 1:
-
 TextBoxes: Name, Roll
-
 Dropdown: Subjects
-
 Button → Page 2
-
 Page 2 displays passed data
-
 Button to go back to Page 1
 
 🧾 sessapp/forms.py
-python
-Copy
-Edit
 from django import forms
-
 class StudentForm(forms.Form):
     SUBJECTS = [
         ('Math', 'Math'),
@@ -124,13 +100,10 @@ class StudentForm(forms.Form):
     name = forms.CharField(max_length=100)
     roll = forms.IntegerField()
     subject = forms.ChoiceField(choices=SUBJECTS)
+
 ⚙️ sessapp/views.py
-python
-Copy
-Edit
 from django.shortcuts import render, redirect
 from .forms import StudentForm
-
 def first_page(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
@@ -152,21 +125,16 @@ def second_page(request):
         'roll': roll,
         'subject': subject
     })
+
 🌐 Add to urls.py
-python
-Copy
-Edit
 from django.urls import path
 from sessapp import views
-
 urlpatterns = [
     path('', views.first_page, name='first'),
     path('second/', views.second_page, name='second'),
 ]
+
 🖼️ firstPage.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -178,10 +146,8 @@ Edit
 </form>
 </body>
 </html>
+
 🖼️ secondPage.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
