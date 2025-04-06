@@ -1,0 +1,194 @@
+✅ Q1: Transfer Multiple Parameters Between Web Pages
+🎯 Requirement:
+Page with:
+
+Dropdown for car manufacturer.
+
+Text box for model name.
+
+Submit button.
+
+On submit → new page shows selected manufacturer and model.
+
+📁 Project Structure
+Copy
+Edit
+carproject/
+├── carapp/
+│   ├── templates/
+│   │   ├── carapp/
+│   │   │   ├── carform.html
+│   │   │   ├── cardetails.html
+│   ├── forms.py
+│   ├── views.py
+├── carproject/
+│   ├── urls.py
+🧾 carapp/forms.py
+python
+Copy
+Edit
+from django import forms
+
+class CarForm(forms.Form):
+    MANUFACTURERS = [
+        ('Toyota', 'Toyota'),
+        ('Honda', 'Honda'),
+        ('Ford', 'Ford'),
+        ('BMW', 'BMW'),
+    ]
+    manufacturer = forms.ChoiceField(choices=MANUFACTURERS)
+    model = forms.CharField(max_length=100)
+⚙️ carapp/views.py
+python
+Copy
+Edit
+from django.shortcuts import render
+from .forms import CarForm
+
+def car_view(request):
+    if request.method == 'POST':
+        form = CarForm(request.POST)
+        if form.is_valid():
+            manufacturer = form.cleaned_data['manufacturer']
+            model = form.cleaned_data['model']
+            context = {'manufacturer': manufacturer, 'model': model}
+            return render(request, 'carapp/cardetails.html', context)
+    else:
+        form = CarForm()
+    return render(request, 'carapp/carform.html', {'form': form})
+🌐 carproject/urls.py
+python
+Copy
+Edit
+from django.contrib import admin
+from django.urls import path
+from carapp import views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', views.car_view, name='carform'),
+]
+🖼️ carform.html
+html
+Copy
+Edit
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Select Car Details</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
+🖼️ cardetails.html
+html
+Copy
+Edit
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Car Details</h2>
+<p>Manufacturer: <strong>{{ manufacturer }}</strong></p>
+<p>Model: <strong>{{ model }}</strong></p>
+</body>
+</html>
+✅ Q2: Transfer Parameters Using Sessions
+🎯 Requirement:
+Page 1:
+
+TextBoxes: Name, Roll
+
+Dropdown: Subjects
+
+Button → Page 2
+
+Page 2 displays passed data
+
+Button to go back to Page 1
+
+🧾 sessapp/forms.py
+python
+Copy
+Edit
+from django import forms
+
+class StudentForm(forms.Form):
+    SUBJECTS = [
+        ('Math', 'Math'),
+        ('Science', 'Science'),
+        ('History', 'History'),
+    ]
+    name = forms.CharField(max_length=100)
+    roll = forms.IntegerField()
+    subject = forms.ChoiceField(choices=SUBJECTS)
+⚙️ sessapp/views.py
+python
+Copy
+Edit
+from django.shortcuts import render, redirect
+from .forms import StudentForm
+
+def first_page(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            request.session['name'] = form.cleaned_data['name']
+            request.session['roll'] = form.cleaned_data['roll']
+            request.session['subject'] = form.cleaned_data['subject']
+            return redirect('second')
+    else:
+        form = StudentForm()
+    return render(request, 'sessapp/firstPage.html', {'form': form})
+
+def second_page(request):
+    name = request.session.get('name', 'Not Found')
+    roll = request.session.get('roll', 'Not Found')
+    subject = request.session.get('subject', 'Not Found')
+    return render(request, 'sessapp/secondPage.html', {
+        'name': name,
+        'roll': roll,
+        'subject': subject
+    })
+🌐 Add to urls.py
+python
+Copy
+Edit
+from django.urls import path
+from sessapp import views
+
+urlpatterns = [
+    path('', views.first_page, name='first'),
+    path('second/', views.second_page, name='second'),
+]
+🖼️ firstPage.html
+html
+Copy
+Edit
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Enter Student Info</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Go to Second Page</button>
+</form>
+</body>
+</html>
+🖼️ secondPage.html
+html
+Copy
+Edit
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Student Details</h2>
+<p>Name: <strong>{{ name }}</strong></p>
+<p>Roll: <strong>{{ roll }}</strong></p>
+<p>Subject: <strong>{{ subject }}</strong></p>
+<a href="{% url 'first' %}"><button>Back to First Page</button></a>
+</body>
+</html>
