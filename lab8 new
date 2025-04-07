@@ -111,7 +111,7 @@ def first_page(request):
             request.session['name'] = form.cleaned_data['name']
             request.session['roll'] = form.cleaned_data['roll']
             request.session['subject'] = form.cleaned_data['subject']
-            return redirect('second_page')
+            return redirect('second')
     else:
         form = StudentForm()
     return render(request, 'sessapp/firstPage.html', {'form': form})
