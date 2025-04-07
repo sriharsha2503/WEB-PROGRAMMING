@@ -1,9 +1,7 @@
 ✅ Q3. CGPA Calculation Using Django Sessions
 🎯 Requirement:
 Page 1: Two text boxes (name, total marks) + Calculate button.
-
 On submit → Page 2 shows Welcome {name}, Your CGPA = total_marks / 50.
-
 📁 File Structure:
 Copy
 Edit
@@ -14,22 +12,16 @@ cgpaapp/
 │   └── cgpaapp/
 │       ├── page1.html
 │       └── page2.html
-🧾 cgpaapp/forms.py
-python
-Copy
-Edit
-from django import forms
 
+🧾 cgpaapp/forms.py
+from django import forms
 class CGPAForm(forms.Form):
     name = forms.CharField(max_length=100)
     total_marks = forms.IntegerField()
+
 ⚙️ cgpaapp/views.py
-python
-Copy
-Edit
 from django.shortcuts import render, redirect
 from .forms import CGPAForm
-
 def page1(request):
     if request.method == 'POST':
         form = CGPAForm(request.POST)
@@ -42,26 +34,20 @@ def page1(request):
     else:
         form = CGPAForm()
     return render(request, 'cgpaapp/page1.html', {'form': form})
-
 def page2(request):
     name = request.session.get('name', 'Unknown')
     cgpa = request.session.get('cgpa', 0)
     return render(request, 'cgpaapp/page2.html', {'name': name, 'cgpa': cgpa})
+
 🌐 urls.py
-python
-Copy
-Edit
 from django.urls import path
 from cgpaapp import views
-
 urlpatterns = [
     path('', views.page1, name='page1'),
     path('result/', views.page2, name='page2'),
 ]
+
 🖼️ page1.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -73,10 +59,8 @@ Edit
 </form>
 </body>
 </html>
+
 🖼️ page2.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -84,25 +68,20 @@ Edit
 <p>Your CGPA is = {{ cgpa }}</p>
 </body>
 </html>
+=============================================================================================
 ✅ Q1. Register & Success Page (Secure Form)
-🧾 registerapp/forms.py
-python
-Copy
-Edit
-from django import forms
 
+🧾 registerapp/forms.py
+from django import forms
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput())
     email = forms.EmailField(required=False)
     contact = forms.CharField(required=False)
+
 ⚙️ registerapp/views.py
-python
-Copy
-Edit
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
-
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -121,10 +100,8 @@ def success(request):
         'email': request.session.get('email', ''),
         'contact': request.session.get('contact', '')
     })
+
 🖼️ register.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -136,10 +113,8 @@ Edit
 </form>
 </body>
 </html>
+
 🖼️ success.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -148,15 +123,12 @@ Edit
 <p>Contact Number: {{ contact }}</p>
 </body>
 </html>
+=================================================================================================
 ✅ Q2. Book Rating with Voting Result in %
 This question would need a basic session-based voting app.
 
 🧾 voteapp/forms.py
-python
-Copy
-Edit
 from django import forms
-
 class VoteForm(forms.Form):
     CHOICES = [
         ('good', 'Good'),
@@ -164,15 +136,11 @@ class VoteForm(forms.Form):
         ('bad', 'Bad')
     ]
     vote = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+
 ⚙️ voteapp/views.py
-python
-Copy
-Edit
 from django.shortcuts import render
 from .forms import VoteForm
-
 votes = {'good': 0, 'satisfactory': 0, 'bad': 0}
-
 def vote_view(request):
     if request.method == 'POST':
         form = VoteForm(request.POST)
@@ -185,10 +153,8 @@ def vote_view(request):
     else:
         form = VoteForm()
     return render(request, 'voteapp/vote.html', {'form': form})
+
 🖼️ vote.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -200,10 +166,8 @@ Edit
 </form>
 </body>
 </html>
+
 🖼️ results.html
-html
-Copy
-Edit
 <!DOCTYPE html>
 <html>
 <body>
@@ -213,3 +177,4 @@ Edit
 <p>Bad: {{ percentages.bad }}%</p>
 </body>
 </html>
+=================================================================================================
